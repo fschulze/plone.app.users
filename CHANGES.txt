@@ -4,6 +4,10 @@ Changelog
 1.1.4 (unreleased)
 ------------------
 
+- Add a constraint on passwords to disallow special characters in passwords.
+  Fixes https://dev.plone.org/ticket/13114.
+  [khink]
+
 - Ensure links on user preference panes adhere to navigation root.
   Fixes https://dev.plone.org/ticket/11909.
   [davidjb]

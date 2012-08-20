@@ -40,6 +40,15 @@ import logging
 JOIN_CONST = ['username', 'password', 'email', 'mail_me']
 
 
+def noSpecialCharsConstraint(value):
+    if isinstance(value, unicode):
+        try:
+            value.decode('utf-8')
+            return True
+        except:
+            return False
+
+
 class IRegisterSchema(Interface):
 
     username = schema.ASCIILine(
@@ -55,7 +64,9 @@ class IRegisterSchema(Interface):
     password = schema.Password(
         title=_(u'label_password', default=u'Password'),
         description=_(u'help_password_creation',
-                      default=u'Minimum 5 characters.'))
+                      default=u'Minimum 5 characters. Special characters not allowed.'),
+        constraint=noSpecialCharsConstraint,
+        )
 
     password_ctl = schema.Password(
         title=_(u'label_confirm_password',

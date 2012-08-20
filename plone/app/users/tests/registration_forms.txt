@@ -108,7 +108,22 @@ Testing the flexible user registration
     >>> 'Confirm password' in browser.contents
     True
     
-    Fill out the form.
+    Fill out the form. If we try to use special characters in the password, we
+    will be notified::
+    >>> browser.getControl('User Name').value = 'user2'
+    >>> browser.getControl('E-mail').value = 'user2@example.com'
+    >>> browser.getControl('Password').value = 'sëcret'
+    >>> browser.getControl('Confirm password').value = 'sëcret'
+    >>> browser.getControl('Register').click()
+    >>> "codec can't encode character" not in browser.contents
+    True
+    >>> "You have been registered" not in browser.contents
+    True
+    >>> "Constraint not satisfied" in browser.contents
+    True
+
+    Fill out the form with a valid password::
+    >>> browser.getLink('Register').click()
     >>> browser.getControl('User Name').value = 'user2'
     >>> browser.getControl('E-mail').value = 'user2@example.com'
     >>> browser.getControl('Password').value = 'secret'
